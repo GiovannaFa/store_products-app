@@ -1,0 +1,49 @@
+<div class="row">
+    {{#each notes}}
+    {{!-- {{#check hours 0}} --}}
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title d-flex justify-content-between align-items-center">
+                    {{title}} <a href="/notes/edit/{{_id}}"><i class="fas fa-highlighter"></i></a>
+                </h4>
+                <p>{{description}}</p>
+                <p>{{quantity}} pieces</p>
+
+                <form action="/notes/add-hrs/{{_id}}" method="GET">
+                    <button class="fas fa-plus" type="submit"></button>
+                </form>
+                <form action="/notes/rem-hrs/{{_id}}" method="GET">
+                    <button class="fas fa-minus" type="submit"></button>
+                </form>
+                {{#exists price}}
+                <p>Precio Standard: {{price}} €</p>
+                {{/exists}}
+                <p>Precio Actual: {{actual_price}} €</p>
+                {{#exists expire_date}}
+                <p> Fecha de caducidad: {{formatTime expire_date "DD/MM/YYYY"}}</p>
+                {{/exists}}
+
+
+
+                <form action="/notes/delete/{{_id}}?_method=DELETE" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <button class="btn btn-danger btn-block btn-sm" type="submit">
+                    delete
+                </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{!-- {{/check}} --}}
+    <!--If no notes yer-->
+    {{else}}
+    <div class="card mx-auto">
+        <div class="card-body">
+            <h1>Hello {{user.name}}</h1>
+            <p class="lead"> No notes yet </p>
+            <a href="/notes/add" class="btn btn-success btn-block">Create one!</a>
+        </div>
+    </div>
+    {{/each}}
+</div>
